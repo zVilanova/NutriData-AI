@@ -1,90 +1,90 @@
-# 🥗 NutriData AI - API de Análise Nutricional 
+# 🥗 NutriData AI - Nutritional Analysis API
 
-Projeto de estudo para consolidar conhecimentos em consumo de APIs externas com Python, desenvolvimento de Web APIs com FastAPI, tratamento de dados em JSON e organização de responsabilidades em camadas.
+A study project built to consolidate knowledge in consuming external APIs with Python, developing Web APIs with FastAPI, handling JSON data, and organizing responsibilities across layers.
 
-## Visão Geral
+## Overview
 
-NutriData AI é uma API desenvolvida em Python que consome dados públicos da Open Food Facts para buscar produtos alimentícios, normalizar informações nutricionais e retornar uma resposta simplificada e útil para análise.
+NutriData AI is a Python-built API that consumes public data from Open Food Facts to search for food products, normalize nutritional information, and return a simplified, useful response for analysis.
 
-O objetivo principal do projeto é estudar, na prática, como APIs funcionam em Python, desde o recebimento de uma requisição HTTP até o consumo de uma API externa e o tratamento da resposta.
+The main goal of this project is to study, in practice, how APIs work in Python — from receiving an HTTP request to consuming an external API and handling its response.
 
-Atualmente, o projeto conta com:
+Currently, the project includes:
 
-- API REST desenvolvida com FastAPI
-- Consumo da API pública Open Food Facts
-- Validação de parâmetros de entrada
-- Tratamento de erros de integração externa
-- Normalização de dados nutricionais
-- Organização em camadas: routers, services e clients
+- A REST API built with FastAPI
+- Consumption of the public Open Food Facts API
+- Input parameter validation
+- External integration error handling
+- Nutritional data normalization
+- Layered organization: routers, services, and clients
 
-## Objetivo de Aprendizado
+## Learning Goal
 
-Este projeto foi criado como parte da minha evolução em Python, especialmente para entender melhor:
+This project was created as part of my growth in Python, especially to better understand:
 
-- Como criar endpoints com FastAPI
-- Como consumir APIs externas com `requests`
-- Como trabalhar com JSON em Python
-- Como tratar erros HTTP
-- Como separar responsabilidades em uma aplicação backend
-- Como transformar dados externos brutos em respostas mais limpas e úteis
+- How to create endpoints with FastAPI
+- How to consume external APIs with `requests`
+- How to work with JSON in Python
+- How to handle HTTP errors
+- How to separate responsibilities in a backend application
+- How to transform raw external data into cleaner, more useful responses
 
-### Arquitetura
+### Architecture
 
 ```mermaid
 flowchart LR
-    user["👤 Usuário<br/>Cliente HTTP"]
-    api["🌐 FastAPI<br/>Aplicação principal"]
+    user["👤 User<br/>HTTP Client"]
+    api["🌐 FastAPI<br/>Main application"]
     router["🧭 Router<br/>foods.py"]
     service["🧠 Service<br/>food_service.py"]
     client["🔌 Client<br/>open_food_facts_client.py"]
-    external["🥗 Open Food Facts<br/>API externa"]
+    external["🥗 Open Food Facts<br/>External API"]
 
     user -->|"HTTP Request"| api
-    api -->|"Direciona rota"| router
-    router -->|"Chama função de serviço"| service
-    service -->|"Solicita produtos"| client
+    api -->|"Routes request"| router
+    router -->|"Calls service function"| service
+    service -->|"Requests products"| client
     client -->|"GET /cgi/search.pl"| external
 
-    external -.->|"JSON bruto"| client
-    client -.->|"JSON desserializado"| service
-    service -.->|"Dados formatados"| router
-    router -.->|"Resposta final"| api
+    external -.->|"Raw JSON"| client
+    client -.->|"Deserialized JSON"| service
+    service -.->|"Formatted data"| router
+    router -.->|"Final response"| api
     api -.->|"HTTP Response"| user
 ```
 
-Responsabilidades:
+Responsibilities:
 
-| Camada | Responsabilidade |
+| Layer | Responsibility |
 |---|---|
-| `main.py` | Ponto de entrada da aplicação e registro dos routers |
-| `routers/` | Define os endpoints da API |
-| `services/` | Contém regras de negócio, validações e formatação dos dados |
-| `clients/` | Isola a comunicação com APIs externas |
+| `main.py` | Application entry point and router registration |
+| `routers/` | Defines the API endpoints |
+| `services/` | Contains business rules, validations, and data formatting |
+| `clients/` | Isolates communication with external APIs |
 
 ## Stack
 
-| Camada | Tecnologia |
+| Layer | Technology |
 |---|---|
-| Linguagem | Python |
+| Language | Python |
 | API | FastAPI |
-| Servidor local | Uvicorn |
-| Requisições HTTP | Requests |
-| Fonte de dados | Open Food Facts API |
+| Local server | Uvicorn |
+| HTTP requests | Requests |
+| Data source | Open Food Facts API |
 
-## Endpoints da API
+## API Endpoints
 
-| Método | Rota | Descrição |
+| Method | Route | Description |
 |---|---|---|
-| `GET` | `/health` | Verifica se a API está funcionando |
-| `GET` | `/foods/search?query={valor}` | Busca produtos na Open Food Facts e retorna dados nutricionais formatados |
+| `GET` | `/health` | Checks whether the API is running |
+| `GET` | `/foods/search?query={value}` | Searches products on Open Food Facts and returns formatted nutritional data |
 
-## Exemplo de Requisição
+## Example Request
 
 ```txt
 GET /foods/search?query=banana
 ```
 
-## Exemplo de Resposta
+## Example Response
 
 ```json
 {
@@ -107,17 +107,17 @@ GET /foods/search?query=banana
 }
 ```
 
-## Tratamento de Erros
+## Error Handling
 
-A API trata alguns cenários importantes:
+The API handles a few important scenarios:
 
-| Status | Situação |
+| Status | Situation |
 |---|---|
-| `400 Bad Request` | Query vazia ou contendo apenas espaços |
-| `502 Bad Gateway` | Erro retornado pela API externa |
-| `504 Gateway Timeout` | Timeout ao tentar consumir a Open Food Facts |
+| `400 Bad Request` | Empty query or query containing only whitespace |
+| `502 Bad Gateway` | Error returned by the external API |
+| `504 Gateway Timeout` | Timeout while consuming Open Food Facts |
 
-Exemplo:
+Example:
 
 ```json
 {
@@ -125,69 +125,53 @@ Exemplo:
 }
 ```
 
-## Rodando Localmente
+## Running Locally
 
-### Pré-requisitos
+### Prerequisites
 
 - Python 3.13+
 - Git
-- VS Code ou editor de preferência
+- VS Code or your preferred editor
 
-### Clonar o repositório
+### Clone the repository
 
 ```powershell
 git clone https://github.com/zVilanova/NutriData-AI.git
 cd NutriData-AI
 ```
 
-### Criar ambiente virtual
+### Create a virtual environment
 
 ```powershell
 python -m venv .venv
 ```
 
-### Ativar ambiente virtual
+### Activate the virtual environment
 
 ```powershell
 .\.venv\Scripts\Activate.ps1
 ```
 
-### Instalar dependências
+### Install dependencies
 
 ```powershell
 pip install -r requirements.txt
 ```
 
-### Executar aplicação
+### Run the application
 
 ```powershell
 uvicorn app.main:app --reload
 ```
 
-A API estará disponível em:
+The API will be available at:
 
 ```txt
 http://127.0.0.1:8000
 ```
 
-Documentação interativa:
+Interactive documentation:
 
 ```txt
 http://127.0.0.1:8000/docs
 ```
-
-## Status do Projeto
-
-Projeto em desenvolvimento.
-
-A versão atual tem como foco o aprendizado dos fundamentos de APIs em Python, incluindo criação de endpoints, consumo de API externa, tratamento de JSON, validação de entrada e separação inicial de responsabilidades.
-
-## Próximas Melhorias
-
-- [ ] Criar schemas com Pydantic para padronizar os contratos da API
-- [ ] Adicionar análise nutricional com pandas
-- [ ] Criar endpoint `/foods/analyze`
-- [ ] Integrar Gemini para geração de insights nutricionais
-- [ ] Criar endpoint `/foods/insights`
-- [ ] Mover configurações sensíveis para variáveis de ambiente
-- [ ] Melhorar documentação dos exemplos de uso
