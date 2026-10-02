@@ -1,6 +1,5 @@
 # 🥗 NutriData AI - API de Análise Nutricional
 ![Python](https://img.shields.io/badge/Python-3776AB?style=flat&logo=python&logoColor=white)
-![Pandas](https://img.shields.io/badge/pandas-150458?style=flat&logo=pandas&logoColor=white)
 
 Um projeto de estudo criado para consolidar conhecimentos em consumo de APIs externas com Python, desenvolvimento de Web APIs com FastAPI, manipulação de dados JSON e organização de responsabilidades em camadas.
 
